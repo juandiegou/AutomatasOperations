@@ -1,0 +1,3 @@
+
+class Grafica(object):
+    pass
