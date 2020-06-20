@@ -14,7 +14,7 @@ class Automata(object):
         self.automata=self.genereAutomata(self._estados,self._transiciones)
         self._isanAFD=self.isAFD()
         self._isanAFND=self.isAFND()
-
+        print(self.automata)
 
 
     def getISAFND(self):
@@ -67,6 +67,8 @@ class Automata(object):
         l=[]
         for x in listado:
             for y in x:
+                if y[2]=='@':  #@ representa una transicion lambda
+                    return True
                 l.append(y)
             if self.compararTuplas(l[0],l[1]):
                 return True
@@ -93,6 +95,23 @@ class Automata(object):
 
     def recorrer(self):
         pass
+
+
+    def moverA(self,estado,transicion):
+        lista=self.automata.items[estado]
+        if transicion in lista[2]:
+            return lista[1]
+        
+        return None
+
+    def clausura_epsilon(self,estado,listaTransiciones=[]):
+        listaTransiciones.append(estado)
+        for transicion in self.automata[estado]:
+            if transicion[1]=='@':
+                self.clausura_epsilon(transicion[2],listaTransiciones)
+                
+        print(listaTransiciones)
+        return listaTransiciones
 
 
 

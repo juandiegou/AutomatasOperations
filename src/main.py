@@ -4,6 +4,7 @@ from estado import Estado
 from transicion import Transicion
 import random
 import itertools
+import string
 
 
 class Main():
@@ -15,10 +16,13 @@ class Main():
         for i in range(0,5):
             e.append(Estado(i))
             for j in range(0,4):
-                t.append(Transicion(i,random.randint(0,38),random.randint(1, 3)))  
+                t.append(Transicion(i,random.choice(string.ascii_letters),random.randint(1, 3)))  
         #print(e,'\n',t)
+        t.append(Transicion(3,'@',random.randint(0, 4)))
+        t.append(Transicion(2,'@',random.randint(4, 4)))
         at=Automata(e,t)
-        print(at.getISAFD(),at.getISAFND())
+        #print(at.getISAFD(),at.getISAFND())
+        print(at.clausura_epsilon(4))
 
 
 
