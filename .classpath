@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="srcjava/edu/umd/cs/piccolo/|srcjava/" kind="src" path=""/>
+	<classpathentry excluding="edu/umd/cs/piccolo/" kind="src" path="srcjava"/>
+	<classpathentry kind="src" path="srcjava/edu/umd/cs/piccolo"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

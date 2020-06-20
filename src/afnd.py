@@ -1,4 +1,8 @@
 from automata import Automata
 
 class Afnd(Automata):
-    pass
+
+
+    def __init__(self, estados, transiciones):
+        super().__init__(estados, transiciones)
+        
