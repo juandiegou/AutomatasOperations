@@ -1,9 +1,0 @@
-{
-    "python.linting.pylintEnabled": true,
-    "python.linting.enabled": true,
-    "latex-utilities.message.update.show": true,
-    "latex-utilities.texdef.enabled": true,
-    "latex-utilities.tikzpreview.enabled": true,
-    "latex-utilities.tikzpreview.parseTeXFile": true,
-    "maven.executable.preferMavenWrapper": true
-}

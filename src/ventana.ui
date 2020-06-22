@@ -6,73 +6,85 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>353</width>
-    <height>519</height>
+    <width>976</width>
+    <height>628</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>976</width>
+    <height>628</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>976</width>
+    <height>628</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QFrame" name="frame">
+   <widget class="QScrollArea" name="scrollArea">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>361</width>
-      <height>501</height>
+      <width>971</width>
+      <height>601</height>
      </rect>
     </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+    <property name="widgetResizable">
+     <bool>true</bool>
     </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <widget class="QWidget" name="widget" native="true">
+    <widget class="QWidget" name="scrollAreaWidgetContents">
      <property name="geometry">
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>361</width>
-       <height>491</height>
+       <width>969</width>
+       <height>599</height>
       </rect>
      </property>
-     <widget class="QScrollArea" name="scrollArea">
+     <widget class="QWidget" name="verticalLayoutWidget">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>351</width>
-        <height>501</height>
+        <width>971</width>
+        <height>591</height>
        </rect>
       </property>
-      <property name="widgetResizable">
-       <bool>true</bool>
-      </property>
-      <widget class="QWidget" name="scrollAreaWidgetContents">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>349</width>
-         <height>499</height>
-        </rect>
-       </property>
-       <widget class="QScrollBar" name="verticalScrollBar">
-        <property name="geometry">
-         <rect>
-          <x>330</x>
-          <y>0</y>
-          <width>20</width>
-          <height>491</height>
-         </rect>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </widget>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QFrame" name="frame">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <widget class="QLabel" name="label">
+            <property name="geometry">
+             <rect>
+              <x>50</x>
+              <y>10</y>
+              <width>901</width>
+              <height>571</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
      </widget>
     </widget>
    </widget>
@@ -82,7 +94,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>353</width>
+     <width>976</width>
      <height>21</height>
     </rect>
    </property>
@@ -115,7 +127,6 @@
    <addaction name="menuHerramientas"/>
    <addaction name="menuAlgoritmos"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="action">
    <property name="icon">
     <iconset>
@@ -127,8 +138,11 @@
    </property>
   </action>
   <action name="actionAFND_AFD">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>AFND=&gt;AFD</string>

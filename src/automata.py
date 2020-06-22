@@ -110,7 +110,6 @@ class Automata(object):
             if transicion[1]=='@':
                 self.clausura_epsilon(transicion[2],listaTransiciones)
                 
-        print(listaTransiciones)
         return listaTransiciones
 
 
