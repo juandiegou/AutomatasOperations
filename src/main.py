@@ -1,7 +1,7 @@
-from analizador import Analizador
-from automata import Automata
-from estado import Estado
-from transicion import Transicion
+from control.analizador import Analizador
+from logica.automata import Automata
+from logica.estado import Estado
+from logica.transicion import Transicion
 import random
 import itertools
 import string
@@ -22,7 +22,7 @@ class Main():
         t.append(Transicion(2,'@',random.randint(4, 4)))
         at=Automata(e,t)
         #print(at.getISAFD(),at.getISAFND())
-        print(at.clausura_epsilon(4))
+        print(at.clausura_epsilon(2))
 
 
 
