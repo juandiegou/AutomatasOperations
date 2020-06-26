@@ -16,7 +16,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_gui):
         self.actionAFND_AFD.triggered.connect(self.transformar)
         self.actionMinimizar.triggered.connect(self.minimizar)
         self.actionEvaluar_expresion.triggered.connect(self.eval_expresion)
-        self.path='C:\\Users\\juand\Pictures\\Vivaldi Captures\\im.png'
+        self.path='C:\\Users\\juand\\Desktop\\killer\\image.png'
         
         
 
@@ -35,6 +35,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_gui):
     def paintEvent(self,event):
         image= QPixmap(self.path)
         self.label.setPixmap(image)
+        self.label.setSizeIncrement(image.width(), image.height())
         self.resize(image.width(), image.height())
         #painter.drawPixmap(self.rect(),image)
        
