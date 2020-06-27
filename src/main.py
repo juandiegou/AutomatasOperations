@@ -10,8 +10,10 @@ import string
 class Main():
     def __init__(self):
 
-        a=Analizador(['a','b','c','d','e','f','g','h'])
-        print(a.verificar('(a+)|(b+)?(c+)?w'))
+        a=Analizador(['A','B','C','d','e','f','g','h'])
+        #print(a.verificar('(a.b)+.a|a*.b.b?'))
+        a.analizar('A*B|(A+C) ')
+
 
 
 

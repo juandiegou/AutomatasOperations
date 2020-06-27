@@ -8,10 +8,13 @@ import graphviz as grp
 class Graphic:
 
     def __init__(self,automata):
-        self.graph=automata
+        self.graph=automata #esto será un diccionario
 
     def convert_graph(self):
         new_graph = {}
+        for x in self.graph.keys():
+            pass
+
 
 
                 
