@@ -19,5 +19,6 @@ class Transicion:
     def getValor(self):
         return self._valor
 
-        
+    def getTransicion(self):
+        return(self._EstadoI,self._EstadoF,self._valor)
        

@@ -1,9 +1,10 @@
-from Estado import Estado
+from logica.estado import Estado
 
 class EstadoF(Estado):
 
     def __init__(self,nombre):
         super().__init__(nombre)
+        self._final=True
 
 
     

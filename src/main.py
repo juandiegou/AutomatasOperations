@@ -1,18 +1,34 @@
 from control.analizador import Analizador
-from logica.automata import Automata
-from logica.estado import Estado
-from logica.transicion import Transicion
 import random
 import itertools
 import string
-
+from logica.estadoI import EstadoI
+from logica.estadoF import EstadoF
+from logica.estado import Estado
+from logica.transicion import Transicion
+from logica.afd import AFD
 
 class Main():
     def __init__(self):
-
+        """
         a=Analizador(['A','B','C','d','e','f','g','h'])
         #print(a.verificar('(a.b)+.a|a*.b.b?'))
-        a.analizar('A*B|(A+C) ')
+        a.analizar('(a+bc*)(cc)?a+')
+        """
+        estados=[]
+        estados.append(EstadoI("x"))
+        estados.append(EstadoF("y"))
+        estados.append(Estado("w"))
+        transiciones=[]
+        transiciones.append(Transicion("x","y",1))
+        transiciones.append(Transicion("x","w",0))
+        transiciones.append(Transicion("y","z",0))
+        transiciones.append(Transicion("y","x",1))
+        transiciones.append(Transicion("w","x",0))
+        transiciones.append(Transicion("w","y",1))
+        a = AFD(estados,transiciones)
+        print(a.getISAFD() ,a.getISAFND())
+
 
 
 
