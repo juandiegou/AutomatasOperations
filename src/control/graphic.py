@@ -10,19 +10,17 @@ class Graphic:
     def __init__(self,automata):
         self.graph=automata #esto será un diccionario
 
-    def convert_graph(self):
-        new_graph = {}
-        for x in self.graph.keys():
-            pass
-
-
-
                 
     def graph_all(self, q0, f):
-        self.convert_graph()
+        """[metodo que genera una imagen con libreria graphviz ]
+            los datos que se le manda al gr.edge()debe ser string o int
+        Args:
+            q0 ([Estado]): [estado inicial]
+            f ([Estado]): [estado final]
+        """
         gr = grp.Digraph(format = 'png', directory = 'D:\Programming\Python\Automata1', strict = True)
         gr.node('ini', shape = 'point')
-        
+        gr.graph_attr['rankdir'] = 'LR'
         for node in self.graph:
             if node == f:
                 gr.node(node, shape = 'doublecircle', color = 'green', size = '1,1')
@@ -32,18 +30,15 @@ class Graphic:
             gr.node(node, label = node)
         
         for node in self.graph:
-            for adj in self.graph[node]:
-                label_name = self.graph[node][adj]
-                gr.edge(node, adj, color = 'red', label = label_name)
-#                name = 'aista' + node + adj
-#                gr.render(view = False, directory = 'D:\Programming\Python\Automata1', cleanup = True, filename = name)
+            for x in self.graph[node]:
+                gr.edge(str(x[0]),str(x[1]),str(x[2]))
         gr.render(view = True, directory = 'D:\Programming\Python\Automata1', cleanup = True, filename = 'Full automata')
         
   
 
     def stepbstep(self, traversal, q0, f):
         #print(traversal)
-#       self.convert_graph()
+#       #self.convert_graph()
         new_graph = {}
         last_node = None
         for step in traversal:

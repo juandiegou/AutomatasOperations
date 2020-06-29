@@ -1,6 +1,6 @@
-from automata import Automata
+from logica.automata import Automata
 
-class Afnd(Automata):
+class AFND(Automata):
 
 
     def __init__(self, estados, transiciones):

@@ -1,0 +1,5 @@
+# Para instalar una versión graphviz quegrafica 
+graphviz
+
+#el entorno grafico
+pyqt

@@ -5,7 +5,7 @@ class EstadoI(Estado):
 
     def __init__(self,nombre):
         super().__init__(nombre)
-        self._inicial=True
+        self.setIsInicial(True)
 
     
 

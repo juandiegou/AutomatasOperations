@@ -20,7 +20,7 @@ class Automata(object):
         self.automata=self.genereAutomata(self._estados,self._transiciones)
         self.isanAFD=self.isAFD()
         self.isanAFND=self.isAFND()
-        print(self.automata)
+        #print(self.automata)
 
 
     def getISAFND(self):
@@ -191,5 +191,23 @@ class Automata(object):
 
 
 
+    def getInicial(self):
+        """[metodo que permite saber cual es el nodo inicial]
 
+        Returns:
+            [Estado]: [retorna el estado inicial]
+        """
+        for x in self._estados :
+            if x.isInicial():
+                return x.getNombre()
+
+    def getFinal(self):
+        """[metodo que permite saber el nodo final]
+
+        Returns:
+            [Estado]: [retorna el estado final]
+        """
+        for y in self._estados:
+            if y.isFinal():
+                return y.getNombre()
 

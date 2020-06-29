@@ -7,6 +7,7 @@ from logica.estadoF import EstadoF
 from logica.estado import Estado
 from logica.transicion import Transicion
 from logica.afd import AFD
+from control.graphic import Graphic
 
 class Main():
     def __init__(self):
@@ -22,12 +23,15 @@ class Main():
         transiciones=[]
         transiciones.append(Transicion("x","y",1))
         transiciones.append(Transicion("x","w",0))
-        transiciones.append(Transicion("y","z",0))
+        transiciones.append(Transicion("y","w",0))
         transiciones.append(Transicion("y","x",1))
         transiciones.append(Transicion("w","x",0))
         transiciones.append(Transicion("w","y",1))
         a = AFD(estados,transiciones)
-        print(a.getISAFD() ,a.getISAFND())
+        g= Graphic(a.automata)
+        g.graph_all(a.getInicial(),a.getFinal())
+        #print(a.getInicial(),a.getFinal())
+
 
 
 
