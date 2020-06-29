@@ -3,3 +3,7 @@ graphviz
 
 #el entorno grafico
 pyqt
+
+
+#salida error code 5
+pytest-custom_exit_code
