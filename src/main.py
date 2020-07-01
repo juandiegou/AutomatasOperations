@@ -11,10 +11,11 @@ from control.graphic import Graphic
 
 class Main():
     def __init__(self):
-        """
+        
         a=Analizador(['A','B','C','d','e','f','g','h'])
         #print(a.verificar('(a.b)+.a|a*.b.b?'))
-        a.analizar('(a+bc*)(cc)?a+')
+        #a.analizar('(a+bc*)(cc)?a+')
+        a.eliminaespacios('( a.b )+.a | a*.b.b? )')
         """
         estados=[]
         estados.append(EstadoI("x"))
@@ -31,7 +32,7 @@ class Main():
         g= Graphic(a.automata)
         g.graph_all(a.getInicial(),a.getFinal())
         #print(a.getInicial(),a.getFinal())
-
+        """
 
 
 

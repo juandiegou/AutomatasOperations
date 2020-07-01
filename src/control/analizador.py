@@ -67,7 +67,7 @@ class Analizador():
         """
         salida=[] #esta será una lista que tendra el recorrido en postfijo
         temporal=[] #esta lista se comportara como pila para el funcionamiento
-        self._estados=expresion
+        self._estados=self.eliminaespacios(expresion)
         for x in self._estados:
             if x not in self.__constantes:
                 salida.append(x)
@@ -111,3 +111,19 @@ class Analizador():
             [int]: [el valor predefinido de su precedencia]
         """
         return self.__precedencia[x]
+
+
+    def eliminaespacios(self,expresion):
+        """[permite eliminar espacio de una expresion]
+
+        Args:
+            expresion ([string]): [una expresion regular]
+
+        Returns:
+            [string]: [una expresion regular sin espacios]
+        """
+        salida=''
+        for x in expresion:
+            if x != ' ':
+                salida+=x
+        return salida
