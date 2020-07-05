@@ -52,11 +52,11 @@ class Automata(object):
         """
         automata={}
         for e in estados:
-            automata[e.getNombre()]=[]
-
+            automata[str(e.getNombre())]=[]
+        #print(automata)
 
         for t in transiciones:
-            automata[t.getEstadoI()].append((t.getEstadoI(),t.getEstadoF(),t.getValor() ))
+            automata[str(t.getEstadoI())].append((t.getEstadoI(),t.getEstadoF(),t.getValor() ))
 
         return automata
 
@@ -195,7 +195,7 @@ class Automata(object):
         """[metodo que permite saber cual es el nodo inicial]
 
         Returns:
-            [Estado]: [retorna el estado inicial]
+            [Estado]: [retorna el nombre del  estado inicial]
         """
         for x in self._estados :
             if x.isInicial():
@@ -211,3 +211,90 @@ class Automata(object):
             if y.isFinal():
                 return y.getNombre()
 
+
+
+    def getEstadoInicial(self):
+        """[metodo que permite saber cual es el nodo inicial]
+
+        Returns:
+            [Estado]: [retorna el estado inicial]
+        """
+        for x in self._estados :
+            if x.isInicial():
+                return x
+        print("no se encuentra estado inincial")
+
+    def getEstadoFinal(self):
+        """[metodo que permite saber cual es el estado final]
+
+        Returns:
+            [Estado]: [retorna el estado final]
+        """
+        for x in self._estados :
+            if x.isFinal():
+                return x
+
+    def setEstadoI(self,estado):
+        """[permite cambiar el asiganr un nuevo estado Inicial]
+
+        Args:
+            estado ([Estado]): [el estado que sera un nuevo estado Inicial]
+        """
+        self.getEstadoInicial().setIsInicial(False)
+        estado.setIsInicial(True)
+        self.automata=self.genereAutomata(self._estados,self._transiciones)
+
+    def setEstadoF(self,estado):
+        """[permite cambiar o asiganr un nuevo estado Final]
+
+        Args:
+            estado ([Estado]): [el estado que sera un nuevo estado Final]
+        """
+        self.getEstadoFinal().setIsFinal(False)
+        estado.setIsInicial(True)
+        self.automata=self.genereAutomata(self._estados,self._transiciones)
+
+
+    def agregarEstado(self,estado):
+        """[permite agregar un nuevo estado a la lista de estados]
+
+        Args:
+            estado ([Estado]): [estado que se agregara]
+        """
+        self._estados.append(estado)
+        self.automata=self.genereAutomata(self._estados,self._transiciones)
+
+    def agregarTransicion(self,transicion):
+        """[permite agregar una transicion]
+
+        Args:
+            transicion ([Transicion]): [la transicion que se agregara]
+        """
+        self._transiciones.append(transicion)
+        self.automata=self.genereAutomata(self._estados,self._transiciones)
+    
+    def getTransicionesDe(self,estado):
+        """[permite tener las transiciones de un estado]
+
+        Args:
+            estado ([Estado]): [el estado que se queire tener la transiciones]
+        """
+        lista=[]
+        for x in self._transiciones:
+            if x.getTransicion()[0]==estado.getNombre() or estado.getNombre()==x.getTransicion()[1]:
+                lista.append(x)
+        return lista
+
+    def eliminarEstado(self,estado):
+        """[permite eliminar un estado de un automata]
+
+        Args:
+            estado ([Estado]): [el estado que se quiere eliminar]
+        """
+        self._estados.remove(estado)
+        self.automata=self.genereAutomata(self._estados,self._transiciones)
+
+    def getEstadoX(self,x):
+        for e in self._estados:
+            if e.getNombre()==x:
+                return e

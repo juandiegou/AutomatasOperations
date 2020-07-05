@@ -22,3 +22,6 @@ class Transicion:
     def getTransicion(self):
         return(self._EstadoI,self._EstadoF,self._valor)
        
+
+
+       

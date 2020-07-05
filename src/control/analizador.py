@@ -1,3 +1,10 @@
+from logica.estadoI import EstadoI
+from logica.estadoF import EstadoF
+from logica.transicion import Transicion
+from logica.afnd import AFND
+from logica.automata import Automata
+from logica.afd import AFD
+from logica.estado import Estado
 
 class Analizador():
     
@@ -73,7 +80,7 @@ class Analizador():
                 salida.append(x)
             if x in self.__operadores:
                 if  temporal:
-                    if self.__Evaluaprecedencia(x)>=self.__Evaluaprecedencia(temporal[len(temporal)-1]):
+                    if self.__Evaluaprecedencia(x)>self.__Evaluaprecedencia(temporal[len(temporal)-1]):
                         temporal.append(x)
                     else:   
                         salida.append(temporal.pop(len(temporal)-1))
@@ -92,14 +99,71 @@ class Analizador():
         return salida
 
 
+
+    def DosEstados(self,lista,y):
+        """[metodo que crea un estado Inicial y un estado Final y los devuelve en una lista]
+
+        Args:
+            lista ([list]): [la lista en que se devuelven los estados creados]
+            y ([int]): [indice que dice el numero de estado]
+
+        Returns:
+           lista[list] y[int]: [retorna la lista con los estados y el nuevo valor del indice]
+        """
+        lista.append(EstadoI('q'+str(y)))
+        lista.append(EstadoF('q'+str(y+1)))
+        return lista
+        
+    def UnaTransicion(self,estados,transicion,valor):
+        """[metodo que une dos estados con una transicion]
+
+        Args:
+            estados ([list]): [una lista con los estados que se quieren unir]
+            transicion (list, optional): [una lista donde ira la transicion]. Defaults to [].
+
+        Returns:
+            [list]: [una lista donde se ingresara la transicion]
+        """
+        ei=estados[0].getNombre()
+        ef=estados[len(estados)-1].getNombre()
+        transicion.append(Transicion(str(ei),str(ef),str(valor)))
+        return transicion   
+
     def PostFijoToAFND(self,lista):
         """[permite pasar una lista de expresiones a un AFND]
 
         Args:
             lista ([list]): [la lista con la expresion en PostFijo]
         """
-        pass
+        temporal=[]
+        y=0
+        for x in lista:
+            if x not in self.__operadores:
+                temporal.append(AFND(self.DosEstados([],y),self.UnaTransicion((self.DosEstados([],y)),[],x)))
+                y+=2
+            else:
+               
+                salida=(self.thomsonp(x,temporal))
+                temporal.clear()
+                temporal.append(salida)
+        return temporal
 
+    def thomsonp(self,x,temporal):
+
+        if x=='|':
+            automata=self.operacionO(temporal)
+            #print(automata,"linea 163")
+
+        elif x=='+':
+            automata=self.operacionMas(temporal)
+        elif x=='*':
+            automata=self.operacionPor(temporal)
+        elif x=='?':
+            automata=self.operacionInterrogacion(temporal)
+        else:
+            automata=self.operacionConcatenacion(temporal)
+            
+        return automata
 
     def __Evaluaprecedencia(self,x):
         """[evlua un caracter para saber el valor de su precedencia (esta es predefinida)]
@@ -126,4 +190,171 @@ class Analizador():
         for x in expresion:
             if x != ' ':
                 salida+=x
+        return salida
+
+
+    def operacionO(self,lista):
+        """[operacion (|) o sobre dos automatas]
+
+        Args:
+            lista ([list]): [una lista con dos automatas]
+
+        Returns:
+            [un automata final]: [el automata despues de aplicarle la operacion o]
+        """
+        automataUno=lista.pop(0)
+        automataDos=lista.pop(0)
+        valor=len(automataUno.getEstados())+len(automataDos.getEstados())
+        estadoI=EstadoI('q'+str(valor))
+        estadoF=EstadoF('q'+str(valor+1))
+        estadoUno=automataUno.getEstadoInicial()
+        estadoDos=automataUno.getEstadoFinal()
+        estadoTres=automataDos.getEstadoInicial()
+        estadoCuatro=automataDos.getEstadoFinal()
+        estados=[estadoI,estadoF]
+        automata=AFND(estados,[])
+        for e in automataUno.getEstados():
+            automata.agregarEstado(e)
+        
+        for x in automataDos.getEstados():
+            automata.agregarEstado(x)
+        transicionUnO=Transicion(estadoI.getNombre(),estadoUno.getNombre(),'@')
+        transicionDos=Transicion(estadoI.getNombre(),estadoTres.getNombre(),'@')
+        transicionTres=Transicion(estadoCuatro.getNombre(),estadoF.getNombre(),'@')
+        transicionCuatro=Transicion(estadoDos.getNombre(),estadoF.getNombre(),'@')
+        transiciones=[transicionUnO,transicionDos,transicionTres,transicionCuatro]
+        
+        for t in transiciones:
+            automata.agregarTransicion(t)
+
+        for w in automataUno.getTransiciones():
+            automata.agregarTransicion(w)
+
+        for y in automataDos.getTransiciones():
+            automata.agregarTransicion(y)
+        
+        return automata
+       
+
+
+    def operacionMas(self,lista):
+        automata=lista.pop(0)
+        if lista:
+            print("falta algo por hacer")
+        else:
+            valor=len(automata.getEstados())
+            estadoI=EstadoI('q'+str(valor))
+            estadoF=EstadoF('q'+str(valor+1))
+            estadoUno=automata.getEstadoInicial()
+            estadoDos=automata.getEstadoFinal()
+            estados=[estadoI,estadoF]
+            automataF=AFND(estados,[])
+            for e in automata.getEstados():
+                automataF.agregarEstado(e)
+            transicionUno=Transicion(estadoI.getNombre(),estadoUno.getNombre(),'@')
+            transicionDos=Transicion(estadoDos.getNombre(),estadoUno.getNombre(),'@')
+            transicionTres=Transicion(estadoDos.getNombre(),estadoF.getNombre(),'@')
+            transiciones=[transicionUno,transicionDos,transicionTres]
+            for x in transiciones:
+                automataF.agregarTransicion(x)
+
+            for y in automata.getTransiciones():
+                automataF.agregarTransicion(y)
+
+            return automataF   
+
+            
+
+
+    def operacionPor(self,lista):
+        automata=lista.pop(0)
+        if lista:
+            print("falta algo por hacer")
+        else:
+            valor=len(automata.getEstados())
+            estadoI=EstadoI('q'+str(valor))
+            estadoF=EstadoF('q'+str(valor+1))
+            estadoUno=automata.getEstadoInicial()
+            estadoDos=automata.getEstadoFinal()
+            estados=[estadoI,estadoF]
+            automataF=AFND(estados,[])
+            for e in automata.getEstados():
+                automataF.agregarEstado(e)
+            transicionUno=Transicion(estadoI.getNombre(),estadoUno.getNombre(),'@')
+            transicionDos=Transicion(estadoDos.getNombre(),estadoUno.getNombre(),'@')
+            transicionTres=Transicion(estadoDos.getNombre(),estadoF.getNombre(),'@')
+            transicionCuatro=Transicion(estadoI.getNombre(),estadoF.getNombre(),'@')
+            transiciones=[transicionUno,transicionDos,transicionTres,transicionCuatro]
+            for x in transiciones:
+                automataF.agregarTransicion(x)
+
+            for y in automata.getTransiciones():
+                automataF.agregarTransicion(y)
+
+            return automataF   
+
+
+    def operacionInterrogacion(self,lista):
+        automata=lista.pop(0)
+        if lista:
+            print("falta algo por hacer")
+        else:
+            valor=len(automata.getEstados())
+            estadoI=EstadoI('q'+str(valor))
+            estadoF=EstadoF('q'+str(valor+1))
+            estadoUno=automata.getEstadoInicial()
+            estadoDos=automata.getEstadoFinal()
+            estados=[estadoI,estadoF]
+            automataF=AFND(estados,[])
+            for e in automata.getEstados():
+                automataF.agregarEstado(e)
+            transicionUno=Transicion(estadoI.getNombre(),estadoUno.getNombre(),'@')
+            transicionTres=Transicion(estadoDos.getNombre(),estadoF.getNombre(),'@')
+            transicionDos=Transicion(estadoI.getNombre(),estadoF.getNombre(),'@')
+            transiciones=[transicionUno,transicionDos,transicionTres]
+            for x in transiciones:
+                automataF.agregarTransicion(x)
+
+            for y in automata.getTransiciones():
+                automataF.agregarTransicion(y)
+
+            return automataF   
+
+    def operacionConcatenacion(self,lista):
+        """[operacion que concatena dos automatas]
+
+        Args:
+            lista ([list]): [una lista con dos automatas]
+
+        Returns:
+            [Automata]: [el automata final con la concatenacion]
+        """
+        automataUno=lista.pop(0)
+        automataDos=lista.pop(0)
+        estadoi=automataUno.getEstadoFinal()
+        for x in automataDos.getEstados():
+            automataUno.agregarEstado(x)
+        estadox=automataUno.getEstadoX(automataDos.getEstadoFinal().getNombre())
+        automataUno.setEstadoF(estadox)
+        estadof=automataDos.getEstadoInicial().getNombre()
+        automataUno.agregarTransicion(Transicion(estadoi.getNombre(),estadof,'@'))
+        for y in automataDos.getTransiciones():
+            automataUno.agregarTransicion(y)
+
+        return automataUno
+
+    def obtenerEstados(self,transiciones,estados):
+        """[permite obtener los estados que tienen transiciones que entran]
+
+        Args:
+            transiciones ([list]): [la lista de transiciones]
+            estados ([list]): [la lista de estados]
+
+        Returns:
+            [list]: [las transiciones que tienen llegada a los estados]
+        """
+        salida=[]
+        for x in transiciones:
+            if x.getTransicion()[1] in estados:
+               salida.append(x.getTransicion())
         return salida
