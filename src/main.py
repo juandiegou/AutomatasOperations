@@ -34,10 +34,11 @@ class Main():
         #a = AFD(estados,transiciones)
         
         an= Analizador(['A','B','C','d','e','f','g','h'])
-        a=an.PostFijoToAFND(an.obtenerPosfijo('(a|b)*')) #para probar una er solo cambiar en obtenerpostfijo
-        ax=a.pop()
-        g= Graphic(ax.automata)
-        g.graph_all(ax.getInicial(),ax.getFinal())
+        a=an.PostFijoToAFND(an.obtenerPosfijo('a')) #para probar una er solo cambiar en obtenerpostfijo
+        #print(a.pop().automata)
+        #ax=a.pop()
+        #g= Graphic(ax.automata)
+        #g.graph_all(ax.getInicial(),ax.getFinal())
         #print(a.getInicial(),a.getFinal())
 
 
