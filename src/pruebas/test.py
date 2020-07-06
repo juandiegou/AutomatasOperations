@@ -1,4 +1,4 @@
-import Analizador
+from control.analizador import Analizador
 import pytest
 
 dic={'q0':[('q0','q1','a')],'q1':[]}
@@ -8,5 +8,5 @@ def mainTest(self):
     assert a.pop().automata ==dic
 
 
-if __== '__main__':
+if  __name__ == '__main__':
     mainTest()
