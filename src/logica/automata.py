@@ -146,14 +146,51 @@ class Automata(object):
                 return True
         return False
 
-    def afndAafd(self):
-        pass
 
     def minimizar(self):
-        pass
+        if self.isAFD():
+            pass
+
+    def conjuntos(self,estados,finales):
+        dic={}
+        finales=self.obtenerFinales()
+        estados=self.__restar__(self._estados,finales)
+        dic[0]=finales
+        dic[1]=estados
+        self.obtenerConjuntos(self._transiciones,dic)
+
+    def obtenerConjuntos(self,transiciones,dic):
+
+        for x in transiciones:
+            if x.getTransicion()[0] in dic[1]:
+                print(x.getTransicion())
+                
+
+            
+
+
+
+
+
+    def obtenerValores(self):
+        valores=[]
+        for t in self._transiciones:
+            if t.getTransicion()[2] not in valores:
+                valores.append(t.getTransicion()[2])
+        return valores
+            
+
+    def obtenerFinales(self):
+        finales=[]
+        for e in self._estados:
+            if e.isFinal():
+                finales.append(e)
+        return finales
 
     def recorrer(self):
         pass
+
+
 
 
     def moverA(self,estado,transicion):
@@ -255,6 +292,7 @@ class Automata(object):
         self.automata=self.genereAutomata(self._estados,self._transiciones)
 
 
+
     def agregarEstado(self,estado):
         """[permite agregar un nuevo estado a la lista de estados]
 
@@ -298,3 +336,9 @@ class Automata(object):
         for e in self._estados:
             if e.getNombre()==x:
                 return e
+
+    def __restar__(self,listaUno,listaDos):
+        for x in listaDos:
+            if x in listaUno:
+                listaUno.remove(x)
+        return listaUno

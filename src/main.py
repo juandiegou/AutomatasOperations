@@ -12,6 +12,7 @@ from logica.automata import Automata
 class Main():
     def __init__(self):
     
+        """
         a=Analizador(['A','B','C','d','e','f','g','h'])
         #print(a.verificar('(a.b)+.a|a*.b.b?'))
         #a.analizar('(a+bc*)(cc)?a+')
@@ -30,9 +31,10 @@ class Main():
         transiciones.append(Transicion("y","x",1))
         transiciones.append(Transicion("w","x",0))
         transiciones.append(Transicion("w","y",1))
-        """
-        #a = AFD(estados,transiciones)
         
+        a = AFD(estados,transiciones)
+        
+        """
         an= Analizador(['A','B','C','d','e','f','g','h'])
         a=an.PostFijoToAFND(an.obtenerPosfijo('a')) #para probar una er solo cambiar en obtenerpostfijo
         #print(a.pop().automata)
@@ -40,10 +42,13 @@ class Main():
         #g= Graphic(ax.automata)
         #g.graph_all(ax.getInicial(),ax.getFinal())
         #print(a.getInicial(),a.getFinal())
+        """
+        #print(a.obtenerValores())
+        a.obtenerConjuntos(a._transiciones,{})
 
 
 
-"""
+
 if __name__ == '__main__':
    m=Main()
-"""
+
