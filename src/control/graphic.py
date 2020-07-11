@@ -30,8 +30,9 @@ class Graphic:
             gr.node(node, label = node)
         
         for node in self.graph:
-            for x in self.graph[node]:
-                gr.edge(str(x[0]),str(x[1]),str(x[2]))
+            for x in self.graph[node]:       
+                gr.edge(tail_name=str(x[0]),head_name=str(x[1]),label=str(x[2]))
+
         gr.render(view = True, directory = 'D:\Programming\Python\Automata1', cleanup = True, filename = 'Full automata')
         
   

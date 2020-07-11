@@ -358,3 +358,38 @@ class Analizador():
             if x.getTransicion()[1] in estados:
                salida.append(x.getTransicion())
         return salida
+
+    def verificarCadena(self,string, inicial, aceptacion, transiciones):
+        """ Proceso para vrificar si una cadena es aceptada por un afd
+        :param inicial: estado inicial
+        :param aceptacion: estado aceptador
+        :param transiciones: transiciones del automata
+        :return:
+        """
+        diccionario = {}
+
+        for x in transiciones:
+            diccionario[x.getEstadoI(), str(x.getValor())] = x.getEstadoF()
+
+        return self.procesoCadena(string, inicial, aceptacion, diccionario)
+
+
+    def procesoCadena(self,string, inicial, aceptacion, transiciones):  # creamos la funcion
+        """permite verificar si una cadena o palabra es aceptada por un automata
+        :param inicial: nodo inicial
+        :param aceptacion: nodo de aceptacion
+        :param transiciones: transiciones del automata
+        :return: true si la cadena o palabra es aceptada, false si no es aceptada
+        """
+        if string == "":  # cuando no encuentra nada
+            return inicial in aceptacion  # retorna true
+        else:
+            caracter = string[0]  # comienza con el primer caracter
+
+            if (inicial, caracter) in transiciones:  # compara (estado, caracter) se encuentra en transicion
+                destino = transiciones[(inicial, caracter)]  # si es asi destino tendra el nuevo valor estado
+                print(inicial, destino)
+                remaining_string = string[1:]  # comenzara a recorrer los demas caracteres
+                return Analizador.procesoCadena(remaining_string, destino, aceptacion, transiciones)  # funcion recursiva
+            else:
+                return False  # si no es asi retorna falso

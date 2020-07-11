@@ -165,7 +165,7 @@ class Automata(object):
         temporal1=[]
         lista2=[]
         temporal2=[]
-        print(dic)
+        #print(dic)
         for x in transiciones:
             if x.getTransicion()[0] in dic[1]:
                 listica=[]
@@ -174,7 +174,6 @@ class Automata(object):
                         listica.append(0)
                     else:
                         listica.append(1)
-                temporal1.append(x.getTransicion())
                 lista.append(listica)
             else:
                 listica2=[]
@@ -183,12 +182,13 @@ class Automata(object):
                         listica2.append(0)
                     else:
                         listica2.append(1)
-                temporal1.append(x.getTransicion())
+                   
                 lista2.append(listica2)
         if self.evaluarCambios(lista) or self.evaluarCambios(lista2) :
             if self.evaluarCambios(lista) and self.evaluarCambios(lista2):
                 print("HUbo cambios en ambas listas")
             elif self.evaluarCambios(lista):
+                print(lista,temporal1)
                 print("HUbo cambios en lista")
             else:
                 print("HUbo cambios en lista2")

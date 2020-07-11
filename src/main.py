@@ -69,12 +69,45 @@ class Main():
         a = AFD(estados,transiciones)
 
         #print(a.obtenerValores())
-        ##g= Graphic(a.automata)
-        #g.graph_all(a.getInicial(),a.getFinal())
-        print(a.conjuntos())
+        print(a.automata)
+        b=self.modificarDiccionario(a.automata)
+        print(b)
+        g= Graphic(b)
+        g.graph_all(a.getInicial(),a.getFinal())
+        #print(a.conjuntos())
+        
         
 
+    def modificarDiccionario(self,diccionario):
+        for k in diccionario.keys():
+            l=diccionario[k]
+            m=[]
+            t=[]
+            for a in l:
+                m.append(a[1])
+                t.append(a[2])
+            for x in m:
+                if self.contar(x,m)>1:
+                    v=self.aString(t)
+                    tupla=(k,m[0],(v))
+                    print(tupla)
+                    diccionario[k]=[tupla]
+        return diccionario
+    def contar(self,x,l):
+        return l.count(x)
 
+    def aString(self,lista):
+        salida=''
+        for x in lista:
+            if lista.index(x)<len(lista)-1:
+                salida+=str(x)+','
+            else:
+                salida+=str(x)
+
+
+
+        return salida
+        
 
 if __name__ == '__main__':
    m=Main()
