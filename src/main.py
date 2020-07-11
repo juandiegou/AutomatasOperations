@@ -17,7 +17,7 @@ class Main():
         #print(a.verificar('(a.b)+.a|a*.b.b?'))
         #a.analizar('(a+bc*)(cc)?a+')
         a.eliminaespacios('( a.b )+.a | a*.b.b? )')
-        """    
+           
         estados=[]
         estadoUno=EstadoI("x")
         estados.append(estadoUno)
@@ -34,7 +34,7 @@ class Main():
         
         a = AFD(estados,transiciones)
         
-        """
+    
         an= Analizador(['A','B','C','d','e','f','g','h'])
         a=an.PostFijoToAFND(an.obtenerPosfijo('a')) #para probar una er solo cambiar en obtenerpostfijo
         #print(a.pop().automata)
@@ -43,9 +43,36 @@ class Main():
         #g.graph_all(ax.getInicial(),ax.getFinal())
         #print(a.getInicial(),a.getFinal())
         """
-        #print(a.obtenerValores())
-        a.obtenerConjuntos(a._transiciones,{})
+        estados=[]
+        estadoUno=EstadoI("a")
+        estados.append(estadoUno)
+        estados.append(Estado("b"))
+        estados.append(EstadoF("c"))
+        estados.append(EstadoF("d"))
+        estados.append(EstadoF("e"))
+        estados.append(Estado("f"))
 
+        transiciones=[]
+        transiciones.append(Transicion("a","b",0))
+        transiciones.append(Transicion("b","a",0))
+        transiciones.append(Transicion("a","c",1))
+        transiciones.append(Transicion("b","d",1))
+        transiciones.append(Transicion("c","e",0))
+        transiciones.append(Transicion("c","f",1))
+        transiciones.append(Transicion("d","e",0))
+        transiciones.append(Transicion("d","f",1))
+        transiciones.append(Transicion("e","e",0))
+        transiciones.append(Transicion("e","f",1))
+        transiciones.append(Transicion("f","f",0))
+        transiciones.append(Transicion("f","f",1))
+        
+        a = AFD(estados,transiciones)
+
+        #print(a.obtenerValores())
+        ##g= Graphic(a.automata)
+        #g.graph_all(a.getInicial(),a.getFinal())
+        print(a.conjuntos())
+        
 
 
 

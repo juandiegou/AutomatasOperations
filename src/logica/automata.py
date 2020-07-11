@@ -151,27 +151,74 @@ class Automata(object):
         if self.isAFD():
             pass
 
-    def conjuntos(self,estados,finales):
+    def conjuntos(self):
         dic={}
         finales=self.obtenerFinales()
-        estados=self.__restar__(self._estados,finales)
+        estados=self.__restar__(self.__getEstados__(),finales)
         dic[0]=finales
         dic[1]=estados
-        self.obtenerConjuntos(self._transiciones,dic)
+        return self.obtenerConjuntos(self._transiciones,dic)
 
     def obtenerConjuntos(self,transiciones,dic):
-
+        valores=self.obtenerValores()
+        lista=[]
+        temporal1=[]
+        lista2=[]
+        temporal2=[]
+        print(dic)
         for x in transiciones:
             if x.getTransicion()[0] in dic[1]:
-                print(x.getTransicion())
+                listica=[]
+                for y in valores:
+                    if self.obtenerConjunto(x.getTransicion()[0],y) in dic[0]:
+                        listica.append(0)
+                    else:
+                        listica.append(1)
+                temporal1.append(x.getTransicion())
+                lista.append(listica)
+            else:
+                listica2=[]
+                for y in valores:
+                    if self.obtenerConjunto(x.getTransicion()[0],y) in dic[0]:
+                        listica2.append(0)
+                    else:
+                        listica2.append(1)
+                temporal1.append(x.getTransicion())
+                lista2.append(listica2)
+        if self.evaluarCambios(lista) or self.evaluarCambios(lista2) :
+            if self.evaluarCambios(lista) and self.evaluarCambios(lista2):
+                print("HUbo cambios en ambas listas")
+            elif self.evaluarCambios(lista):
+                print("HUbo cambios en lista")
+            else:
+                print("HUbo cambios en lista2")
+        else:    
+            return self.automata
+
+
+    def evaluarCambios(self,lista):
+        
+        for x in lista:
+            if lista.count(x)<len(lista):
+                return True
+        return False
                 
 
-            
+
+
+        
+
+
+                
+    def obtenerConjunto(self,estado,valor):
+        transiciones=self.getTransicionesDe(self.getEstadoX(estado))
+        for x in transiciones:
+            if x.getTransicion()[0]==estado and x.getTransicion()[2]==valor:
+                return x.getTransicion()[1]
 
 
 
-
-
+    
     def obtenerValores(self):
         valores=[]
         for t in self._transiciones:
@@ -184,7 +231,7 @@ class Automata(object):
         finales=[]
         for e in self._estados:
             if e.isFinal():
-                finales.append(e)
+                finales.append(e.getNombre())
         return finales
 
     def recorrer(self):
@@ -333,12 +380,40 @@ class Automata(object):
         self.automata=self.genereAutomata(self._estados,self._transiciones)
 
     def getEstadoX(self,x):
+        """[permite obtener un estado X(cualquiera que este en el automata)]
+
+        Args:
+            x (string): [el nombre del estado buscado]
+
+        Returns:
+            [type]: [description]
+        """
         for e in self._estados:
             if e.getNombre()==x:
                 return e
 
     def __restar__(self,listaUno,listaDos):
+        """[permite restar los valores de dos listas]
+
+        Args:
+            listaUno ([list]): [la lista principal de la que se va a restar]
+            listaDos ([list]): [la  lista secundaria que contiene los valores a restar]
+
+        Returns:
+            [list]: [la lista sin los valores restados]
+        """
         for x in listaDos:
             if x in listaUno:
                 listaUno.remove(x)
         return listaUno
+
+    def __getEstados__(self):
+        """[permite obtener todos los nombres de los estados]
+
+        Returns:
+            [list]: [la lista con los nombres de todos los estados]
+        """
+        lista=[]
+        for x in self.getEstados():
+            lista.append(x.getNombre())
+        return lista
