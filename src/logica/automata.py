@@ -152,71 +152,12 @@ class Automata(object):
             pass
 
     def conjuntos(self):
-        dic={}
         finales=self.obtenerFinales()
         estados=self.__restar__(self.__getEstados__(),finales)
-        dic[0]=finales
-        dic[1]=estados
-        return self.obtenerConjuntos(self._transiciones,dic)
+        lista=[estados,finales]
+        return self.obtenerConjuntos(self._transiciones,lista)
 
-    def obtenerConjuntos(self,transiciones,dic):
-        valores=self.obtenerValores()
-        lista=[]
-        temporal1=[]
-        lista2=[]
-        temporal2=[]
-        #print(dic)
-        for x in transiciones:
-            if x.getTransicion()[0] in dic[1]:
-                listica=[]
-                for y in valores:
-                    if self.obtenerConjunto(x.getTransicion()[0],y) in dic[0]:
-                        listica.append(0)
-                    else:
-                        listica.append(1)
-                lista.append(listica)
-            else:
-                listica2=[]
-                for y in valores:
-                    if self.obtenerConjunto(x.getTransicion()[0],y) in dic[0]:
-                        listica2.append(0)
-                    else:
-                        listica2.append(1)
-                   
-                lista2.append(listica2)
-        if self.evaluarCambios(lista) or self.evaluarCambios(lista2) :
-            if self.evaluarCambios(lista) and self.evaluarCambios(lista2):
-                print("HUbo cambios en ambas listas")
-            elif self.evaluarCambios(lista):
-                print(lista,temporal1)
-                print("HUbo cambios en lista")
-            else:
-                print("HUbo cambios en lista2")
-        else:    
-            return self.automata
-
-
-    def evaluarCambios(self,lista):
-        
-        for x in lista:
-            if lista.count(x)<len(lista):
-                return True
-        return False
-                
-
-
-
-        
-
-
-                
-    def obtenerConjunto(self,estado,valor):
-        transiciones=self.getTransicionesDe(self.getEstadoX(estado))
-        for x in transiciones:
-            if x.getTransicion()[0]==estado and x.getTransicion()[2]==valor:
-                return x.getTransicion()[1]
-
-
+    
 
     
     def obtenerValores(self):

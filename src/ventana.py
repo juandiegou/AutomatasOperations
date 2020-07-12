@@ -10,11 +10,13 @@ from logica.estadoF import EstadoF
 from logica.estado import Estado
 from logica.transicion import Transicion
 from logica.afd import AFD
+from logica.automata import Automata
+from logica.afnd import AFND
 from control.graphic import Graphic
 
 estados = []
 transiciones = []
-
+a=None
 
 """----------------------------------------Diseño de interfaz------------------------------------------------------"""
 
@@ -139,7 +141,7 @@ def graficarAutomata():
     titulo2 = Label(canvas_dibujo1,text="Automata", font=("Arial",15))
     titulo2.place(x=350,y=2)
 
-    a = AFD(estados, transiciones)
+    a = Automata(estados, transiciones)
     b=modificarDiccionario(a.automata)
     g = Graphic(b)
     g.graph_all(a.getInicial(), a.getFinal())
@@ -154,17 +156,36 @@ def modificarDiccionario(diccionario):
         m=[]
         t=[]
         for a in l:
-            m.append(a[1])
+            m.append(a)
             t.append(a[2])
         for x in m:
-            if contar(x,m)>1:
+            if contar(m):
                 v=aString(t)
-                tupla=(k,m[0],(v))
-                print(tupla)
+                tupla=(k,x[1],(v))
+                print("tupla",tupla)
                 diccionario[k]=[tupla]
     return diccionario
-def contar(x,l):
-    return l.count(x)
+
+def contar(lista):
+    listado=sorted(itertools.combinations(lista,2))
+    for x in listado:
+        if compararTuplas(x[0],x[1]):
+            return True
+    return False
+
+
+def compararTuplas(tupla1,tupla2): 
+    """[metodo que compara si los valores de dos tuplas son iguales]
+
+    Args:
+        tupla1 ([tuple]): [una tupla que representa una transicion]
+        tupla2 ([tuple]): [una tupla que representa una transicion]
+
+    Returns:
+        [boolean]: [True si son iguales]
+    """
+
+    return tupla1[:2]==tupla2[:2]
 
 def aString(lista):
     salida=''
@@ -176,7 +197,25 @@ def aString(lista):
     return salida
 
 def afnd():
-    pass
+    canvas_dibujo.destroy()
+    canvas_dibujo1 = Canvas(ventana, width=800, height=700, bg="#2E065E")
+    canvas_dibujo1.place(x=0, y=0)
+
+    #titulo del dibujo
+    titulo2 = Label(canvas_dibujo1,text="Automata", font=("Arial",15))
+    titulo2.place(x=350,y=2)
+    a = Automata(estados, transiciones)
+    print(a.automata)
+    if a is not None:
+        if a.isAFND():
+            pass
+        else:
+            messagebox.showinfo(message="Debe ser un AFND", title="Error")
+    else:
+        messagebox.showinfo(message="verifica que todo sea correcto,\n no ecuentro un automata", title="Error")
+
+
+    
 
 def  minimizar():
     pass
