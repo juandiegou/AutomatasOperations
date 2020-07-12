@@ -53,7 +53,7 @@ class Main():
         estados.append(Estado("f"))
 
         transiciones=[]
-        transiciones.append(Transicion("a","b",0))
+        transiciones.append(Transicion("a","f",0))
         transiciones.append(Transicion("b","a",0))
         transiciones.append(Transicion("a","c",1))
         transiciones.append(Transicion("b","d",1))

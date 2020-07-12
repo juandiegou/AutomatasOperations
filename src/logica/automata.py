@@ -155,10 +155,39 @@ class Automata(object):
         finales=self.obtenerFinales()
         estados=self.__restar__(self.__getEstados__(),finales)
         lista=[estados,finales]
-        return self.obtenerConjuntos(self._transiciones,lista)
+        return self.obtenerConjuntos(estados,finales)
 
+    def obtenerConjuntos(self,e,f):
+        f=self.marcar(e,f)
+        temp=[]
+        cambios=True
+        while cambios:
+            l=self.__restar__(e,f)
+            for x in l:
+                for v in self.obtenerValores():
+                    m= self.funcionTransicion(x,v)
+                    if m in f:
+                        f.append(m)
+                        print(f)
+                    else:
+                        cambios=False    
+        return f
     
+    def marcar(self,t,l):
+        lis=[]
+        for x in t:
+            #print(x.getTransicion())
+            if x in l :
+                lis.append(x)
+        print("saliendo",l)
+        return l
 
+    def funcionTransicion(self,x,v):
+        l=self.getTransicionesDe(self.getEstadoX(x))
+        for y in l:
+            if y.getTransicion()[2]==v:
+                return y.getTransicion()[1]
+        
     
     def obtenerValores(self):
         valores=[]

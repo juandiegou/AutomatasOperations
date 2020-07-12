@@ -390,6 +390,6 @@ class Analizador():
                 destino = transiciones[(inicial, caracter)]  # si es asi destino tendra el nuevo valor estado
                 print(inicial, destino)
                 remaining_string = string[1:]  # comenzara a recorrer los demas caracteres
-                return Analizador.procesoCadena(remaining_string, destino, aceptacion, transiciones)  # funcion recursiva
+                return self.procesoCadena(remaining_string, destino, aceptacion, transiciones)  # funcion recursiva
             else:
                 return False  # si no es asi retorna falso
