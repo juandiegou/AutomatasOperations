@@ -17,6 +17,7 @@ from control.graphic import Graphic
 estados = []
 transiciones = []
 a=None
+expr=''
 
 """----------------------------------------Diseño de interfaz------------------------------------------------------"""
 
@@ -80,7 +81,7 @@ lst_cadena = Listbox(canvas_principal, fg = "white", bg = "#2E065E", width = 30,
 lst_cadena.place(x = 100, y = 570)
 
 
-er=StringVar()
+er = StringVar()
 txt_er= Entry(canvas_principal, width = 30, textvariable = er).place(x = 100, y = 335)
 
 """----------------------------------------Funciones---------------------------------------------------"""
@@ -217,6 +218,14 @@ def afnd():
         messagebox.showinfo(message="verifica que todo sea correcto,\n no ecuentro un automata", title="Error")
 
 
+def erToAFND():
+    expr = er.get()
+    if expr == "":
+        messagebox.showinfo(message="Campo vacío", title="Error")
+    else:
+        print(expr)
+
+
     
 
 def  minimizar():
@@ -248,7 +257,7 @@ btn_graficar = Button(canvas_principal, width=10, text="Graficar", font=("Arial"
 btn_graficar.place(x=240, y=220)
 
 btn_ingresar_ER = Button(canvas_principal, width=15, text="Ingresar ER", font=("Arial", 11), fg="#ffffff",
-                          command=afnd, background="#1E6F4A", state="normal")
+                          command=erToAFND, background="#1E6F4A", state="normal")
 btn_ingresar_ER.place(x=300, y=330)
 
 

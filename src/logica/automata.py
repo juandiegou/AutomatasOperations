@@ -155,7 +155,11 @@ class Automata(object):
         finales=self.obtenerFinales()
         estados=self.__restar__(self.__getEstados__(),finales)
         lista=[estados,finales]
-        return self.obtenerConjuntos(estados,finales)
+        t=self.obtenerConjuntos(estados,finales)
+        t2=[]
+        while t!=t2:
+            t2=self.obtenerConjuntos(t,finales)
+
 
     def obtenerConjuntos(self,e,f):
         f=self.marcar(e,f)
