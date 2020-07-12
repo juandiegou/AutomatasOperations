@@ -76,6 +76,7 @@ class Main():
         a.conjuntos()
         
         
+        
 """ def modificarDiccionario(self,diccionario):
         for k in diccionario.keys():
             l=diccionario[k]
