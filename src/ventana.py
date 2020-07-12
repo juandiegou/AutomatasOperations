@@ -80,6 +80,8 @@ lst_cadena = Listbox(canvas_principal, fg = "white", bg = "#2E065E", width = 30,
 lst_cadena.place(x = 100, y = 570)
 
 
+er=StringVar()
+txt_er= Entry(canvas_principal, width = 30, textvariable = er).place(x = 100, y = 335)
 
 """----------------------------------------Funciones---------------------------------------------------"""
 
@@ -244,6 +246,11 @@ btn_transicionIngresar.place(x=300, y=170)
 btn_graficar = Button(canvas_principal, width=10, text="Graficar", font=("Arial",11), fg="#ffffff",
                           command=graficarAutomata, background="#1E6F4A", state="normal")
 btn_graficar.place(x=240, y=220)
+
+btn_ingresar_ER = Button(canvas_principal, width=15, text="Ingresar ER", font=("Arial", 11), fg="#ffffff",
+                          command=afnd, background="#1E6F4A", state="normal")
+btn_ingresar_ER.place(x=300, y=330)
+
 
 btn_afnd = Button(canvas_principal, width=15, text="AFND => AFD", font=("Arial", 11), fg="#ffffff",
                           command=afnd, background="#1E6F4A", state="normal")

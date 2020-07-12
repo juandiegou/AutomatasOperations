@@ -50,21 +50,19 @@ class Main():
         estados.append(EstadoF("c"))
         estados.append(EstadoF("d"))
         estados.append(EstadoF("e"))
-        estados.append(Estado("f"))
+        #estados.append(Estado("f"))
 
         transiciones=[]
-        transiciones.append(Transicion("a","f",0))
-        transiciones.append(Transicion("b","a",0))
-        transiciones.append(Transicion("a","c",1))
-        transiciones.append(Transicion("b","d",1))
-        transiciones.append(Transicion("c","e",0))
-        transiciones.append(Transicion("c","f",1))
-        transiciones.append(Transicion("d","e",0))
-        transiciones.append(Transicion("d","f",1))
-        transiciones.append(Transicion("e","e",0))
-        transiciones.append(Transicion("e","f",1))
-        transiciones.append(Transicion("f","f",0))
-        transiciones.append(Transicion("f","f",1))
+        transiciones.append(Transicion("a","b",'a'))
+        transiciones.append(Transicion("a","c",'b'))
+        transiciones.append(Transicion("b","b",'a'))
+        transiciones.append(Transicion("b","d",'b'))
+        transiciones.append(Transicion("c","c",'b'))
+        transiciones.append(Transicion("c","b",'a'))
+        transiciones.append(Transicion("d","b",'a'))
+        transiciones.append(Transicion("d","e",'b'))
+        transiciones.append(Transicion("e","b",'a'))
+
         
         a = AFD(estados,transiciones)
 

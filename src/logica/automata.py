@@ -167,11 +167,11 @@ class Automata(object):
                 for v in self.obtenerValores():
                     m= self.funcionTransicion(x,v)
                     if m in f:
-                        f.append(m)
+                        temp.append(m)
                         print(f)
                     else:
                         cambios=False    
-        return f
+        return temp
     
     def marcar(self,t,l):
         lis=[]
@@ -179,7 +179,7 @@ class Automata(object):
             #print(x.getTransicion())
             if x in l :
                 lis.append(x)
-        print("saliendo",l)
+        #print("saliendo",l)
         return l
 
     def funcionTransicion(self,x,v):
