@@ -214,8 +214,7 @@ def afnd():
     
     if a != None:
         if a.isAFND():
-            c=a.clausura_epsilon(a.getInicial())
-            print(a.moverA(c[0],'@'))
+           a.afndToAfd()
         else:
             messagebox.showinfo(message="Debe ser un AFND", title="Error")
     else:
@@ -257,7 +256,8 @@ def graficarAutomataER():
     titulo2.place(x=350,y=2)
 
     img_automata = PhotoImage(file="D:\\Programming\\Python\\Automata1\\Full automata.png")
-    canvas_dibujo1.create_image(40, 60, image=img_automata, anchor=NW)
+
+    canvas_dibujo1.create_image(10, 60, image=img_automata , anchor=NW)
     canvas_dibujo1.mainloop()
 
 

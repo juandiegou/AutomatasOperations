@@ -1,6 +1,8 @@
 
 import itertools
-
+from logica.estado import Estado
+from logica.estadoI import EstadoI
+from logica.estadoF import EstadoF
 class Automata(object):
 
     _estados=[]
@@ -20,6 +22,7 @@ class Automata(object):
         self.automata=self.genereAutomata(self._estados,self._transiciones)
         self.isanAFD=self.isAFD()
         self.isanAFND=self.isAFND()
+        self.__constantes=['(',')','|','+','*','?','@','.']
         #print(self.automata)
 
 
@@ -174,20 +177,7 @@ class Automata(object):
 
 
     def obtenerConjuntos(self,e,f):
-        f=self.marcar(e,f)
-        temp=[]
-        cambios=True
-        while cambios:
-            l=self.__restar__(e,f)
-            for x in l:
-                for v in self.obtenerValores():
-                    m= self.funcionTransicion(x,v)
-                    if m in f:
-                        temp.append(m)
-                        print(f)
-                    else:
-                        cambios=False    
-        return temp
+        pass
     
     def marcar(self,t,l):
         lis=[]
@@ -224,6 +214,74 @@ class Automata(object):
         pass
 
 
+    def transformar(self,d):
+        k= self.__restar__(self.obtenerValores(),self.__constantes)
+        estados=[]
+        transiciones=[]
+        f=True
+        f2=True
+        for e in d.keys():
+            if d[e]!=[]:
+                for x in e:
+                    if self.getEstadoX(x).isInicial():
+                        if f:
+                            estados.append(EstadoI(str(d[e])))
+                            f=False
+                    elif self.getEstadoX(x).isInicial():
+                        if f2:
+                            estados.append(EstadoF(str(d[e])))
+                            f=False
+                estados.append(Estado(str(d[e])))
+
+        for l in d.keys():
+            if d[l]!=[]:
+                for w in d[l]:
+                    pass
+
+
+                
+
+
+
+
+
+
+
+
+    def afndToAfd(self):
+        if self.isAFND():
+            char =1
+            dic={}
+            ce=self.clausura_epsilon(self.getInicial(),'@')
+            dic[char]=ce
+            k= self.__restar__(self.obtenerValores(),self.__constantes)
+            for x in ce:
+                for y in k:
+                    m=self.moverA(x,y)
+                    if m is not None:
+                        cl=self.clausura_epsilon(m,'@',[m])
+                        dt=self.validaDic(dic,cl)
+                        if dt!=dic:
+                            dic=dt
+                        else:
+                            print(dic)
+                        cl.clear()
+            return dic
+
+    def validaDic(self,dic,l):
+        for x in dic.keys():
+            y=dic[x]
+            if self.comparaListas(y,l):
+                continue
+            else:
+                lis=dic.keys()
+                n=len(lis)
+                dic[n+1]=l
+                return dic
+
+        return dic
+
+
 
 
     def moverA(self,estado,transicion):
@@ -236,17 +294,15 @@ class Automata(object):
         Returns:
             [type]: [description]
         """
-        lista=[] #terminar
-        if transicion in lista[2]:
-            return lista[1]
+        lista=self.transicionx(self.getEstadoX(estado))
+        for x in lista:
+            y=x.getTransicion()
+            if transicion == y[2]:
+                return y[1]
         
         return None
 
-
-
-
-
-    def clausura_epsilon(self,estado,listaTransiciones=[]):
+    def clausura_epsilon(self,estado,valor='@',listaTransiciones=[]):
         """[metod de la operacion de clausura de epsilon]
 
         Args:
@@ -256,12 +312,23 @@ class Automata(object):
         Returns:
             [type]: [description]
         """
-        listaTransiciones.append(estado)
+        if estado not in listaTransiciones:
+            listaTransiciones.append(estado)
+            
         for transicion in self.automata[estado]:
-            if transicion[2]=='@':
+            if transicion[2]==valor:
                 self.clausura_epsilon(transicion[1],listaTransiciones)
                 
         return listaTransiciones
+
+
+
+    def transicionx(self,estado):
+        lista=[]
+        for x in self._transiciones:
+            if x.getTransicion()[0]==estado.getNombre():
+                lista.append(x)
+        return lista
 
 
 
@@ -407,3 +474,10 @@ class Automata(object):
         for x in self.getEstados():
             lista.append(x.getNombre())
         return lista
+
+    def comparaListas(self,l1,l2):
+        if len(l1)>len(l2) or len(l2)<len(l1):
+            return False
+        else:
+          return l1==l2
+          
