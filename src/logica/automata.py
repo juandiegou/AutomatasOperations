@@ -149,7 +149,19 @@ class Automata(object):
 
     def minimizar(self):
         if self.isAFD():
-            pass
+            finales=self.obtenerFinales()
+            estados=self.__restar__(self.__getEstados__(),finales)
+            distinguibles=[]
+            for x in self._transiciones:
+                y=x.getTransicion()
+                if (y[0] in estados and y[1] in finales) or (y[0] in finales and y[1] in estados):
+                    distinguibles.append([y[0],y[1]])
+                print(y)
+            print(distinguibles)
+        
+
+                
+
 
     def conjuntos(self):
         finales=self.obtenerFinales()
@@ -224,11 +236,15 @@ class Automata(object):
         Returns:
             [type]: [description]
         """
-        lista=self.automata.items[estado]
+        lista=[] #terminar
         if transicion in lista[2]:
             return lista[1]
         
         return None
+
+
+
+
 
     def clausura_epsilon(self,estado,listaTransiciones=[]):
         """[metod de la operacion de clausura de epsilon]
@@ -242,8 +258,8 @@ class Automata(object):
         """
         listaTransiciones.append(estado)
         for transicion in self.automata[estado]:
-            if transicion[1]=='@':
-                self.clausura_epsilon(transicion[2],listaTransiciones)
+            if transicion[2]=='@':
+                self.clausura_epsilon(transicion[1],listaTransiciones)
                 
         return listaTransiciones
 

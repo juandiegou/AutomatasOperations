@@ -13,11 +13,13 @@ from logica.afd import AFD
 from logica.automata import Automata
 from logica.afnd import AFND
 from control.graphic import Graphic
+from control.analizador import Analizador as an
 
+a=None
 estados = []
 transiciones = []
-a=None
 expr=''
+valores=[]
 
 """----------------------------------------Diseño de interfaz------------------------------------------------------"""
 
@@ -131,8 +133,9 @@ def ingresarTransicion():
         messagebox.showinfo(message="Campo vacío", title="Error")
     else:
         transiciones.append(Transicion(estado1, estado2, valor))
+        valores.append(valor)
 
-
+    
 def graficarAutomata():
     """Graficar autómata en la ventana de dibujo"""
 
@@ -144,10 +147,10 @@ def graficarAutomata():
     titulo2 = Label(canvas_dibujo1,text="Automata", font=("Arial",15))
     titulo2.place(x=350,y=2)
 
-    a = Automata(estados, transiciones)
-    b=modificarDiccionario(a.automata)
+    at = Automata(estados, transiciones)
+    b=modificarDiccionario(at.automata)
     g = Graphic(b)
-    g.graph_all(a.getInicial(), a.getFinal())
+    g.graph_all(at.getInicial(), at.getFinal())
 
     img_automata = PhotoImage(file="D:\\Programming\\Python\\Automata1\\Full automata.png")
     canvas_dibujo1.create_image(40, 60, image=img_automata, anchor=NW)
@@ -158,9 +161,9 @@ def modificarDiccionario(diccionario):
         l=diccionario[k]
         m=[]
         t=[]
-        for a in l:
-            m.append(a)
-            t.append(a[2])
+        for at in l:
+            m.append(at)
+            t.append(at[2])
         for x in m:
             if contar(m):
                 v=aString(t)
@@ -207,11 +210,12 @@ def afnd():
     #titulo del dibujo
     titulo2 = Label(canvas_dibujo1,text="Automata", font=("Arial",15))
     titulo2.place(x=350,y=2)
-    a = Automata(estados, transiciones)
-    print(a.automata)
-    if a is not None:
+    #a = Automata(estados, transiciones)
+    
+    if a != None:
         if a.isAFND():
-            pass
+            c=a.clausura_epsilon(a.getInicial())
+            print(a.moverA(c[0],'@'))
         else:
             messagebox.showinfo(message="Debe ser un AFND", title="Error")
     else:
@@ -220,13 +224,47 @@ def afnd():
 
 def erToAFND():
     expr = er.get()
-    if expr == "":
+    if expr == "" or valores ==[]:
         messagebox.showinfo(message="Campo vacío", title="Error")
     else:
-        print(expr)
+        print(valores)
+        an = Analizador(valores)
+        at=an.PostFijoToAFND(an.obtenerPosfijo(expr))
+        ax=at.pop(0)
+        asignarA(ax)
+        g= Graphic(ax.automata)
+        g.graph_all(ax.getInicial(),ax.getFinal())
+        graficarAutomataER()
 
 
-    
+def asignarA(x):
+    global a
+    a=x
+
+        
+
+
+
+def graficarAutomataER():
+    """Graficar autómata en la ventana de dibujo"""
+
+    canvas_dibujo.destroy()
+    canvas_dibujo1 = Canvas(ventana, width=800, height=700, bg="#2E065E")
+    canvas_dibujo1.place(x=0, y=0)
+
+    #titulo del dibujo
+    titulo2 = Label(canvas_dibujo1,text="Automata", font=("Arial",15))
+    titulo2.place(x=350,y=2)
+
+    img_automata = PhotoImage(file="D:\\Programming\\Python\\Automata1\\Full automata.png")
+    canvas_dibujo1.create_image(40, 60, image=img_automata, anchor=NW)
+    canvas_dibujo1.mainloop()
+
+
+
+
+
+
 
 def  minimizar():
     pass

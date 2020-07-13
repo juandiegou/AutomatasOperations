@@ -33,34 +33,35 @@ class Main():
         transiciones.append(Transicion("w","y",1))
         
         a = AFD(estados,transiciones)
-        
+        """
     
         an= Analizador(['A','B','C','d','e','f','g','h'])
-        a=an.PostFijoToAFND(an.obtenerPosfijo('a')) #para probar una er solo cambiar en obtenerpostfijo
-        #print(a.pop().automata)
-        #ax=a.pop()
+        a=an.PostFijoToAFND(an.obtenerPosfijo('a|b')) #para probar una er solo cambiar en obtenerpostfijo
+        print(a.pop().automata)
+        ax=a.pop()
         #g= Graphic(ax.automata)
         #g.graph_all(ax.getInicial(),ax.getFinal())
         #print(a.getInicial(),a.getFinal())
-        """
+        
+    """    
         estados=[]
         estadoUno=EstadoI("a")
         estados.append(estadoUno)
         estados.append(Estado("b"))
-        estados.append(EstadoF("c"))
-        estados.append(EstadoF("d"))
+        estados.append(Estado("c"))
+        estados.append(Estado("d"))
         estados.append(EstadoF("e"))
         #estados.append(Estado("f"))
 
         transiciones=[]
         transiciones.append(Transicion("a","b",'a'))
         transiciones.append(Transicion("a","c",'b'))
-        transiciones.append(Transicion("b","b",'a'))
-        transiciones.append(Transicion("b","d",'b'))
+        transiciones.append(Transicion("b","d",'a'))
+        transiciones.append(Transicion("b","c",'b'))
         transiciones.append(Transicion("c","c",'b'))
-        transiciones.append(Transicion("c","b",'a'))
-        transiciones.append(Transicion("d","b",'a'))
-        transiciones.append(Transicion("d","e",'b'))
+        transiciones.append(Transicion("c","b",'e'))
+        transiciones.append(Transicion("d","b",'e'))
+        transiciones.append(Transicion("d","d",'b'))
         transiciones.append(Transicion("e","b",'a'))
 
         
@@ -73,11 +74,10 @@ class Main():
         #g= Graphic(b)
         #g.graph_all(a.getInicial(),a.getFinal())
         #print(a.conjuntos())
-        a.conjuntos()
+        #a.conjuntos()
+        a.minimizar()        
         
-        
-        
-""" def modificarDiccionario(self,diccionario):
+def modificarDiccionario(self,diccionario):
         for k in diccionario.keys():
             l=diccionario[k]
             m=[]

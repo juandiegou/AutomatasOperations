@@ -35,7 +35,7 @@ class Graphic:
 
         gr.render(view = False, directory = 'D:\Programming\Python\Automata1', cleanup = True, filename = 'Full automata')
         
-  
+        
 
     def stepbstep(self, traversal, q0, f):
         #print(traversal)
